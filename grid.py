@@ -11,3 +11,13 @@ def print_grid():
 
 
 print_grid()
+
+
+#generer un bot en mode debutant
+           
+def bot_game():
+    for i in range(3):
+        for j in range(3):
+            if grid[i][j] == " ":
+                grid[i][j] = "O"  # Le bot joue avec "O"
+                return
