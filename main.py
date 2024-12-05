@@ -1,84 +1,85 @@
 #A faire: améliorer les instructions du jeu
 
 # Début du jeu : introduction 
-def demander_nom():
+def ask_name():
     while True:
-        nom = input("\nQuel est ton nom ? ").strip()  # Utilisation de strip() pour enlever les espaces inutiles
-        if not nom:  # Si le nom est vide ou ne contient que des espaces
-            print("\nMerci de rentrer un nom valide.")
+        name = input("\nWhat is your name? ").strip()  # Utilisation de strip() pour enlever les espaces inutiles
+        if not name:  # Si le nom est vide ou ne contient que des espaces
+            print("\nPlease enter a valid name.")
         else:
-            print(f"\nBienvenue {nom} !")
-            return nom  # Retourner le nom une fois qu'il est valide
+            print(f"\nWelcome {name} !")
+            return name  # Retourner le nom une fois qu'il est valide
 
-def afficher_regles():
+def show_rules():
     while True:
-        afficher_regles = input("\nSouhaites-tu voir les règles du jeu (oui/non) ? ").lower().strip()
-        if afficher_regles == "oui":
-            print("\nRègles du jeu :\n- Le but est d'aligner trois symboles identiques (X ou O) horizontalement, verticalement ou en diagonale.\n- Le jeu se joue sur une grille de 3x3.")
-        elif afficher_regles == "non":
-            print("\nOk, dans ce cas, continuons.")
+        show_rules = input("\nWould you like to see the game rules (yes/no) ?").lower().strip()
+        if show_rules == "yes":
+            print("\nGame rules:\n- The goal is to align three identical symbols (X or O) horizontally, vertically, or diagonally.\n- The game is played on a 3x3 grid.")
+        elif show_rules == "no":
+            print("\nOkey, let's continue")
         else:
-            print("\nJe n'ai pas bien compris, merci de rentrer 'oui' ou 'non'.")
+            print("\nPlease enter only 'yes' or 'no' ")
             continue  # Redemander si l'entrée est invalide
         break
 
 
-def choisir_symbole():
+
+def choose_symbol():
     while True:
-        symbole_joueur = input("\nChoisis ton symbole (X ou O) : ").upper().strip()
-        if symbole_joueur == "X":
-            symbole_bot = "O"
-            print(f"\nGood, tu es le {symbole_joueur} et le bot est le {symbole_bot}.")
-            return symbole_joueur, symbole_bot
-        elif symbole_joueur == "O":
-            symbole_bot = "X"
-            print(f"\nGood, tu es le {symbole_joueur} et le bot est le {symbole_bot}.")
-            return symbole_joueur, symbole_bot
+        player_symbol = input("\nChoose your symbol (X or O): ").upper().strip()
+        if player_symbol == "X":
+            bot_symbol = "O"
+            print(f"\nGood, you are {player_symbol} and the bot is {bot_symbol}.")
+            return player_symbol, bot_symbol
+        elif player_symbol == "O":
+            bot_symbol = "X"
+            print(f"\nGood, you are {player_symbol} and the bot is {bot_symbol}.")
+            return player_symbol, bot_symbol
         else:
-            print("\nMerci de rentrer les symboles 'O' ou 'X'.")
+            print("\nPlease enter the symbols 'O' or 'X'.")
 
 
-def choisir_commenceur(symbole_joueur, symbole_bot):
+def choose_starter(player_symbol, bot_symbol):
     while True:
-        commencer = input("\nVeux-tu commencer à jouer ou laisser le bot jouer ? (jouer/bot) ").lower().strip()
-        if commencer == "jouer":
-            print("\nC'est donc toi qui commenceras le jeu !")
-            return symbole_joueur  # Le joueur humain commence
-        elif commencer == "bot":
-            print("\nC'est donc le bot qui commencera le jeu !")
-            return symbole_bot  # Le bot commence
+        start = input("\nDo you want to start playing or let the bot play? (play/bot) ").lower().strip()
+        if start == "play":
+            print("\nYou will start the game!")
+            return player_symbol  # The human player starts
+        elif start == "bot":
+            print("\nThe bot will start the game!")
+            return bot_symbol  # The bot starts
         else:
-            print("\nMerci de rentrer uniquement les mots 'jouer' ou 'bot'.")
+            print("\nPlease enter only 'play' or 'bot'.")
 
-def choisir_niveau():
+def choose_difficulty():
     while True:
-        niveau = input("\nChoisis le niveau de difficulté (facile/moyen/difficile) : ").lower().strip()
-        if niveau in ["facile", "moyen", "difficile"]:
-            print(f"\nTu as choisi le niveau {niveau}. Bonne chance !")
-            return niveau
+        difficulty = input("\nChoose the difficulty level (easy/medium/hard): ").lower().strip()
+        if difficulty in ["easy", "medium", "hard"]:
+            print(f"\nYou chose {difficulty} difficulty. Good luck!")
+            return difficulty
         else:
-            print("\nMerci de choisir un niveau valide : facile, moyen ou difficile.")
+            print("\nPlease choose a valid difficulty level: easy, medium, or hard.")
            
-def demarrer_jeu():
-    print("\nBienvenue au jeu du Morpion!")
-    nom = demander_nom()  # Demander et valider le nom du joueur
-    afficher_regles()  # Afficher les règles si nécessaire
-    symbole_joueur, symbole_bot = choisir_symbole()  # Choisir les symboles
-    joueur = choisir_commenceur(symbole_joueur, symbole_bot)  # Déterminer qui commence
-    niveau = choisir_niveau()  # Choisir le niveau de difficulté
+def start_game():
+    print("\nWelcome to the Tic-Tac-Toe game!")
+    name = ask_name()  # Ask and validate the player's name
+    show_rules()  # Show the rules if necessary
+    player_symbol, bot_symbol = choose_symbol()  # Choose the symbols
+    player = choose_starter(player_symbol, bot_symbol)  # Determine who starts
+    difficulty = choose_difficulty()  # Choose the difficulty level
 
     # Séparation visuelle et pause
     print("\n" + "-" * 30)
-    input("\nLe jeu commence maintenant, Appuyez sur Entrée !")
+    input("\nThe game starts now, press Enter! ")
     print("\n" + "-" * 30)
-    return joueur, symbole_joueur, symbole_bot, nom, niveau # Retourner ces valeurs pour commencer le jeu
+    return player, player_symbol, bot_symbol, name, difficulty  # Return these values to start the game
 
- 
+
 # Création de la grille vide
 grid = [[" " for _ in range(3)] for _ in range(3)]
 
 # Fonction pour afficher la grille
-def print_grid(grid) -> tuple[int, int]:
+def print_grid(grid) :
     print("     A    B   C")
     for i in range(3):
         print(f" {i+1} | {grid[i][0]} | {grid[i][1]}  | {grid[i][2]} |")
@@ -86,23 +87,23 @@ def print_grid(grid) -> tuple[int, int]:
             print("   +---+----+---+")
 
 # Fonction pour demander une position valide
-def demander_position():
-    CORRESPONDANCE_COLONNES = {"A": 0, "B": 1, "C": 2}  # Colonnes : A, B, C -> indices 0, 1, 2
+def ask_position():
+    COLUMN_MAPPING = {"A": 0, "B": 1, "C": 2}  # Columns: A, B, C -> indices 0, 1, 2
 
     while True:
-        ligne = input("Entrez le numéro correspondant à la ligne (1-3) : ").strip()
-        if not (ligne.isdigit() and 1 <= int(ligne) <= 3):
-            print("Entrée invalide pour la ligne. Veuillez entrer un chiffre entre 1 et 3.")
+        row = input("Enter the row number (1-3): ").strip()
+        if not (row.isdigit() and 1 <= int(row) <= 3):
+            print("Invalid input for the row. Please enter a number between 1 and 3.")
             continue
-        colonne = input("Entrez le caractère correspondant à la colonne (A-C) : ").strip().upper()
-        if colonne not in CORRESPONDANCE_COLONNES:
-            print("Entrée invalide pour la colonne. Veuillez entrer une lettre entre A et C.")
+        column = input("Enter the letter corresponding to the column (A-C): ").strip().upper()
+        if column not in COLUMN_MAPPING:
+            print("Invalid input for the column. Please enter a letter between A and C.")
             continue
 
-        return int(ligne) - 1, CORRESPONDANCE_COLONNES[colonne]  # Conversion et retour de la position
+        return int(row) - 1, COLUMN_MAPPING[column] # Conversion et retour de la position
 
 # Fonction pour vérifier la victoire
-def verif_victoire(grid):
+def check_victory(grid):
     # Vérifie lignes et colonnes
     for i in range(3):
         if grid[i][0] == grid[i][1] == grid[i][2] != " " or grid[0][i] == grid[1][i] == grid[2][i] != " ":
@@ -113,168 +114,175 @@ def verif_victoire(grid):
     return False
 
 # Fonction du bot qui joue à la première case vide
-def bot_facile(symbole_bot, grid):
+def easy_bot(bot_symbol, grid):
     for i in range(3):
         for j in range(3):
             if grid[i][j] == " ":
-                grid[i][j] = symbole_bot  # Le bot joue avec le symbole que n'a pas choisi l'utilisateur
+                grid[i][j] = bot_symbol  # The bot plays with the symbol that the player didn't choose
                 return
             
-def bot_moyen(symbole_bot, grid, symbole_joueur):
-    # Vérifie si le bot peut gagner
+def medium_bot(bot_symbol, grid, player_symbol):
+    # Check if the bot can win
     for i in range(3):
         for j in range(3):
             if grid[i][j] == " ":
-                grid[i][j] = symbole_bot
-                if verif_victoire(grid):
-                    return  # Gagner immédiatement
-                grid[i][j] = " "  # Annuler le coup temporaire
+                grid[i][j] = bot_symbol
+                if check_victory(grid):
+                    return  # Win immediately
+                grid[i][j] = " "  # Undo temporary move
 
     # Vérifie si le bot doit bloquer l'adversaire
     for i in range(3):
         for j in range(3):
             if grid[i][j] == " ":
-                grid[i][j] =symbole_joueur
-                if verif_victoire(grid):
-                    grid[i][j] = symbole_bot  # Bloquer le joueur humain
+                grid[i][j] = player_symbol
+                if check_victory(grid):
+                    grid[i][j] = bot_symbol  # Block the human player
                     return
                 grid[i][j] = " "  # Annuler le coup temporaire
 
     # Prendre le centre si disponible
     if grid[1][1] == " ":
-        grid[1][1] = symbole_bot
+        grid[1][1] = bot_symbol
         return
 
     # Prendre un coin si disponible
     for (i, j) in [(0, 0), (0, 2), (2, 0), (2, 2)]:
         if grid[i][j] == " ":
-            grid[i][j] = symbole_bot
+            grid[i][j] = bot_symbol
             return
 
     # Choisir une case vide (en dernier recours)
     for i in range(3):
         for j in range(3):
             if grid[i][j] == " ":
-                grid[i][j] = symbole_bot
+                grid[i][j] = bot_symbol
                 return
 
-def demander_rejouer():
+def ask_replay():
     while True:
-        rejouer = input("Veux-tu rejouer ? (oui/non) : ").lower().strip()
-        if rejouer == "oui":
-            return True  # Rejouer
-        elif rejouer == "non":
-            print("Merci d'avoir joué ! À bientôt.")
-            return False  # Ne pas rejouer
+        replay = input("Do you want to play again? (yes/no): ").lower().strip()
+        if replay == "yes":
+            return True  # Replay
+        elif replay == "no":
+            print("Thanks for playing! See you soon.")
+            return False  # Don't replay
         else:
-            print("Réponse invalide, merci de rentrer 'oui' ou 'non'.")
+            print("Invalid response, please enter 'yes' or 'no'.")
+
 
 # Fonction principale pour jouer au jeu niveau facile 
-def jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom ):
-    tour = 1
-    joueur_actuel = symbole_joueur
-    if joueur != symbole_joueur:  # Si c'est le bot qui commence
-        joueur_actuel = symbole_bot  # Le bot commence immédiateme
+def play_easy(player, player_symbol, bot_symbol, grid, name):
+    turn = 1
+    current_player = player_symbol
+    if player != player_symbol:  # If it's the bot's turn first
+        current_player = bot_symbol  # Le bot commence immédiateme
 
-    while tour <= 9:
+    while turn <= 9:
         print_grid(grid)
-        if joueur_actuel == symbole_joueur :  # Le joueur humain joue
-            print(f"C'est au tour du joueur {joueur}.")
-            ligne, colonne = demander_position()
+        if current_player == player_symbol:  # The human player plays
+            print(f"It's {player}'s turn.")
+            row, column = ask_position()
 
-            # Vérifie si la case est déjà occupée
-            if grid[ligne][colonne] == " ":
-                grid[ligne][colonne] = symbole_joueur
-                if verif_victoire(grid):
+            # Check if the spot is already taken
+            if grid[row][column] == " ":
+                grid[row][column] = player_symbol
+                if check_victory(grid):
                     print_grid(grid)
-                    print(f"Félicitations ! Le joueur {joueur} a gagné.")
+                    print(f"Congratulations! {player} wins.")
                     break
-                # Passe au joueur suivant
-                joueur_actuel = symbole_bot
-                tour += 1
+                # Switch to the next player
+                current_player = bot_symbol
+                turn += 1
             else:
-                print("Case déjà occupée, essayez encore.")
-        else:  # Le bot joue
-            print(f"C'est au tour du joueur {joueur} (le bot).")
-            bot_facile(symbole_bot, grid)  # Le bot joue
-            if verif_victoire(grid):
+                print("Spot already taken, try again.")
+        else:  # The bot plays
+            print(f"It's {player} (the bot)'s turn.")
+            easy_bot(bot_symbol, grid)  # The bot plays
+            if check_victory(grid):
                 print_grid(grid)
-                print(f"Oh mince! Le joueur {joueur} (le bot) a gagné.")
+                print(f"Oh no! {player} (the bot) wins.")
                 break
-            joueur_actuel = symbole_joueur  # Passe au joueur humain
-            tour += 1
+            current_player = player_symbol  # Switch to the human player
+            turn += 1
 
-    if tour > 9:
+    if turn > 9:
         print_grid(grid)
-        print("Match nul !")
+        print("It's a tie!")
 
-        # Demander si le joueur veut rejouer
-    if demander_rejouer():
-        # Réinitialiser la grille pour la nouvelle partie
+    # Ask if the player wants to replay
+    if ask_replay():
+        # Reset the grid for the new game
         grid = [[" " for _ in range(3)] for _ in range(3)]
-         # Démarrer directement le jeu avec les mêmes paramètres
-        print("\nLe jeu recommence maintenant, Appuyez sur Entrée !")
-        input()  # Attente de l'entrée pour démarrer
-        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
+        # Start the game again with the same parameters
+        print("\nThe game restarts now, press Enter!")
+        input()  # Press Enter to continue the game
+        play_easy(player, player_symbol, bot_symbol, grid, name)
 
 # Fonction principale pour jouer au jeu niveau moyen 
-def jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom ):
-    tour = 1
-    joueur_actuel =  symbole_joueur
-    if joueur != symbole_joueur:  # Si c'est le bot qui commence
-       joueur_actuel = symbole_bot  # Le bot commence immédiatement
+def play_medium(player, player_symbol, bot_symbol, grid, name):
+    turn = 1
+    current_player = player_symbol
+    if player != player_symbol:  # If it's the bot's turn first
+        current_player = bot_symbol  # Le bot commence immédiatement
 
-    while tour <= 9:
+    while turn <= 9:
         print_grid(grid)
-        if joueur_actuel == symbole_joueur :  # Le joueur humain joue
-            print(f"C'est au tour de {joueur_actuel}.")
-            ligne, colonne = demander_position()
+        if current_player == player_symbol:  # The human player plays
+            print(f"It's {player}'s turn.")
+            row, column = ask_position()
 
-            # Vérifie si la case est déjà occupée
-            if grid[ligne][colonne] == " ":
-                grid[ligne][colonne] = symbole_joueur
-                if verif_victoire(grid):
+            # Check if the spot is already taken
+            if grid[row][column] == " ":
+                grid[row][column] = player_symbol
+                if check_victory(grid):
                     print_grid(grid)
-                    print(f"Félicitations ! Le joueur {joueur_actuel} a gagné.")
+                    print(f"Congratulations! {current_player} wins.")
                     break
-                # Passe au joueur suivant
-                joueur_actuel = symbole_bot
-                tour += 1
+                # Switch to the next player
+                current_player = bot_symbol
+                turn += 1
             else:
-                print("Case déjà occupée, essayez encore.")
-        else:  # Le bot joue
-            print(f"C'est au tour du joueur {joueur_actuel} (le bot).")
-            bot_moyen(symbole_bot, grid, symbole_joueur)  # Le bot joue
-            if verif_victoire(grid):
+                print("Spot already taken, try again.")
+        else:  # The bot plays
+            print(f"It's {player} (the bot)'s turn.")
+            medium_bot(bot_symbol, grid, player_symbol)  # The bot plays
+            if check_victory(grid):
                 print_grid(grid)
-                print(f"Oh mince! Le joueur {joueur_actuel} (le bot) a gagné.")
+                print(f"Oh no! {player} (the bot) wins.")
                 break
-            joueur_actuel = symbole_joueur  # Passe au joueur humain
-            tour += 1
+            current_player = player_symbol  # Switch to the human player
+            turn += 1
 
-    if tour > 9:
+    if turn > 9:
         print_grid(grid)
-        print("Match nul !")
+        print("It's a tie!")
 
-    # Demander si le joueur veut rejouer
-    if demander_rejouer():
-        # Réinitialiser la grille pour la nouvelle partie
+
+    # Ask if the player wants to replay
+    if ask_replay():
+        # Reset the grid for the new game
         grid = [[" " for _ in range(3)] for _ in range(3)]
-         # Démarrer directement le jeu avec les mêmes paramètres
-        print("\nLe jeu recommence maintenant, Appuyez sur Entrée !")
-        input()  # Attente de l'entrée pour démarrer
-        jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
+        # Start the game again with the same parameters
+        print("\nThe game restarts now, press Enter!")
+        input()  # Press Enter to continue the game
+        play_medium(player, player_symbol, bot_symbol, grid, name)
 
-def jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom):
-    print("\nLe mode difficile est en cours de développement.")
+def play_hard(player, player_symbol, bot_symbol, grid, name):
+    print("\nThe hard game mode is under development.")
 
 
-# Lancer le jeu
+# Main game loop: Starts the game depending on difficulty chosen
+def main():
+    player, player_symbol, bot_symbol, name, difficulty = start_game()
+
+    if difficulty == "easy":
+        play_easy(player, player_symbol, bot_symbol, grid, name)
+    elif difficulty == "medium":
+        play_medium(player, player_symbol, bot_symbol, grid, name)
+    elif difficulty == "hard":
+        play_hard(player, player_symbol, bot_symbol, grid, name)
+
+# Start the game
 if __name__ == "__main__":
-    joueur, symbole_joueur, symbole_bot, nom, niveau = demarrer_jeu()
-    if niveau == "facile":
-        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)
-    elif niveau == "moyen":
-        jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)
-    elif niveau == "difficile":
-        jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom)
+    main()
