@@ -58,6 +58,16 @@ def choisir_niveau():
             return niveau
         else:
             print("\nMerci de choisir un niveau valide : facile, moyen ou difficile.")
+            # Appeler la fonction appropriée selon le niveau choisi
+        if niveau == "facile":
+            jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)
+        elif niveau == "moyen":
+            print("\nMode moyen non encore implémenté. Revenez bientôt !")
+            # jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)  # À implémenter
+        elif niveau == "difficile":
+            print("\nMode difficile non encore implémenté. Revenez bientôt !")
+            # jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom)  # À implémenter
+
 
 def demarrer_jeu():
     print("\nBienvenue au jeu du Morpion!")
@@ -73,6 +83,7 @@ def demarrer_jeu():
     print("\n" + "-" * 30)
     return joueur, symbole_joueur, symbole_bot, nom # Retourner ces valeurs pour commencer le jeu
 
+ 
 # Création de la grille vide
 grid = [[" " for _ in range(3)] for _ in range(3)]
 
@@ -132,7 +143,7 @@ def demander_rejouer():
             print("Réponse invalide, merci de rentrer 'oui' ou 'non'.")
 
 # Fonction principale pour jouer au jeu
-def jouer(joueur, symbole_joueur, symbole_bot, grid, nom):
+def jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom ):
     tour = 1
 
     while tour <= 9:
@@ -174,7 +185,7 @@ def jouer(joueur, symbole_joueur, symbole_bot, grid, nom):
          # Démarrer directement le jeu avec les mêmes paramètres
         print("\nLe jeu recommence maintenant, Appuyez sur Entrée !")
         input()  # Attente de l'entrée pour démarrer
-        jouer(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
+        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
 
     # Exécution du jeu
 if __name__ == "__main__":
@@ -183,4 +194,4 @@ if __name__ == "__main__":
     joueur, symbole_joueur, symbole_bot, nom = demarrer_jeu()
 
 # Lancer la partie avec les paramètres obtenus, incluant le nom
-jouer(joueur, symbole_joueur, symbole_bot, grid, nom)  # Démarrer la partie avec le nom du joueur
+jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Démarrer la partie avec le nom du joueur
