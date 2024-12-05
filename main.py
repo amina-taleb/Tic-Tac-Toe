@@ -5,16 +5,16 @@ def ask_name():
         if not name:  # Si le nom est vide ou ne contient que des espaces
             print("\nPlease enter a valid name.")
         else:
-            print(f"\nWelcome {name} !")
+            print(f"\nWelcome {name} ! 😄 ")
             return name  # Retourner le nom une fois qu'il est valide
 
 def show_rules():
     while True:
         show_rules = input("\nWould you like to see the game rules (yes/no) ? ").lower().strip()
         if show_rules == "yes":
-            print("\nGame rules:\n- The goal is to align three identical symbols (X or O) horizontally, vertically, or diagonally.\n- The game is played on a 3x3 grid.\n you will play with a bot named Pixi ! ")
+            print("\nGame rules:\n- The goal is to align three identical symbols (X or O) horizontally, vertically, or diagonally.🕺🏻\n- The game is played on a 3x3 grid.🌚\n- You will play with a bot named Pixi !🤖 ")
         elif show_rules == "no":
-            print("\nOkey, let's continue")
+            print("\nOkey, let's continue !😄 ")
         else:
             print("\nPlease enter only 'yes' or 'no' ")
             continue  # Redemander si l'entrée est invalide
@@ -41,10 +41,10 @@ def choose_starter(player_symbol, bot_symbol):
     while True:
         start = input("\nDo you want to start playing or let the bot play ? (play/bot) ").lower().strip()
         if start == "play":
-            print("\nYou will start the game !")
+            print("\nYou will start the game !🦾 ")
             return player_symbol  # The human player starts
         elif start == "bot":
-            print("\nThe bot Pixi will start the game !")
+            print("\nThe bot Pixi will start the game !🤖 ")
             return bot_symbol  # The bot starts
         else:
             print("\nPlease enter only 'play' or 'bot'.")
@@ -53,13 +53,13 @@ def choose_difficulty():
     while True:
         difficulty = input("\nChoose the difficulty level (easy/medium/hard): ").lower().strip()
         if difficulty in ["easy", "medium", "hard"]:
-            print(f"\nYou chose {difficulty} difficulty. Good luck!")
+            print(f"\nYou chose {difficulty} difficulty. Good luck! ⭐ ")
             return difficulty
         else:
             print("\nPlease choose a valid difficulty level: easy, medium, or hard.")
            
 def start_game():
-    print("\nWelcome to the Tic-Tac-Toe game !")
+    print("\nWelcome to the Tic-Tac-Toe game 🕹️ !")
     name = ask_name()  # Ask and validate the player's name
     show_rules()  # Show the rules if necessary
     player_symbol, bot_symbol = choose_symbol()  # Choose the symbols
@@ -68,7 +68,7 @@ def start_game():
 
     # Séparation visuelle et pause
     print("\n" + "-" * 30)
-    input("\nThe game starts now, press Enter ! ")
+    input("\nThe game starts now, press Enter !⛷️ ")
     print("\n" + "-" * 30)
     return player, player_symbol, bot_symbol, name, difficulty  # Return these values to start the game
 
@@ -159,11 +159,11 @@ def medium_bot(bot_symbol, grid, player_symbol):
 
 def ask_replay():
     while True:
-        replay = input("\nDo you want to play again? (yes/no): ").lower().strip()
+        replay = input("\nDo you want to play again? 😁 (yes/no): ").lower().strip()
         if replay == "yes":
             return True  # Replay
         elif replay == "no":
-            print("\nThanks for playing! See you soon.")
+            print("\nThanks for playing! See you soon.😍 ")
             return False  # Don't replay
         else:
             print("\nInvalid response, please enter 'yes' or 'no'.")
@@ -187,33 +187,33 @@ def play_easy(player, player_symbol, bot_symbol, grid, name):
                 grid[row][column] = player_symbol
                 if check_victory(grid):
                     print_grid(grid)
-                    print(f"\nCongratulations! you won ({current_player}).")
+                    print(f"\nCongratulations! you won ({current_player}).🥳 ")
                     break
                 # Switch to the next player
                 current_player = bot_symbol
                 turn += 1
             else:
-                print("\nSpot already taken, try again.")
+                print("\nSpot already taken, try again.😰 ")
         else:  # The bot plays
             print(f"\nIt's Pixi's turn ({current_player}).")
             easy_bot(bot_symbol, grid)  # The bot plays
             if check_victory(grid):
                 print_grid(grid)
-                print(f"\nOh no! Pixi the bot won ({current_player}).")
+                print(f"\nOh no! Pixi the bot won ({current_player}).😪 ")
                 break
             current_player = player_symbol  # Switch to the human player
             turn += 1
 
     if turn > 9:
         print_grid(grid)
-        print("\nIt's a tie!")
+        print("\nIt's a tie!🤔 ")
 
     # Ask if the player wants to replay
     if ask_replay():
         # Reset the grid for the new game
         grid = [[" " for _ in range(3)] for _ in range(3)]
         # Start the game again with the same parameters
-        print("\nThe game restarts now, press Enter!")
+        print("\nThe game restarts now, press Enter!⛷️ ")
         input()  # Press Enter to continue the game
         play_easy(player, player_symbol, bot_symbol, grid, name)
 
@@ -235,26 +235,26 @@ def play_medium(player, player_symbol, bot_symbol, grid, name):
                 grid[row][column] = player_symbol
                 if check_victory(grid):
                     print_grid(grid)
-                    print(f"\nCongratulations! You won.")
+                    print(f"\nCongratulations! You won.🥳 ")
                     break
                 # Switch to the next player
                 current_player = bot_symbol
                 turn += 1
             else:
-                print("\nSpot already taken, try again.")
+                print("\nSpot already taken, try again.😰 ")
         else:  # The bot plays
             print(f"\nIt's Pixi's turn ({current_player}).")
             medium_bot(bot_symbol, grid, player_symbol)  # The bot plays
             if check_victory(grid):
                 print_grid(grid)
-                print(f"\nOh no! Pixi won ({current_player}).")
+                print(f"\nOh no! Pixi won ({current_player}).😪 ")
                 break
             current_player = player_symbol  # Switch to the human player
             turn += 1
 
     if turn > 9:
         print_grid(grid)
-        print("\nIt's a tie!")
+        print("\nIt's a tie!🤔 ")
 
 
     # Ask if the player wants to replay
@@ -262,12 +262,12 @@ def play_medium(player, player_symbol, bot_symbol, grid, name):
         # Reset the grid for the new game
         grid = [[" " for _ in range(3)] for _ in range(3)]
         # Start the game again with the same parameters
-        print("\nThe game restarts now, press Enter!")
+        print("\nThe game restarts now, press Enter!⛷️ ")
         input()  # Press Enter to continue the game
         play_medium(player, player_symbol, bot_symbol, grid, name)
 
 def play_hard(player, player_symbol, bot_symbol, grid, name):
-    print("\nThe hard game mode is under development.")
+    print("\nThe hard game mode is under development.🚧")
 
 
 # Main game loop: Starts the game depending on difficulty chosen
