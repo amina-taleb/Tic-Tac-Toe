@@ -79,11 +79,11 @@ grid = [[" " for _ in range(3)] for _ in range(3)]
 
 # Fonction pour afficher la grille
 def print_grid(grid) -> tuple[int, int]:
-    print("    A   B   C")
+    print("     A    B   C")
     for i in range(3):
-        print(f" {i+1} | {grid[i][0]} | {grid[i][1]} | {grid[i][2]} |")
+        print(f" {i+1} | {grid[i][0]} | {grid[i][1]}  | {grid[i][2]} |")
         if i < 2:
-            print("  -------------")
+            print("   +---+----+---+")
 
 # Fonction pour demander une position valide
 def demander_position():
@@ -113,13 +113,50 @@ def verif_victoire(grid):
     return False
 
 # Fonction du bot qui joue à la première case vide
-def bot_game(symbole_bot, grid):
+def bot_facile(symbole_bot, grid):
     for i in range(3):
         for j in range(3):
             if grid[i][j] == " ":
                 grid[i][j] = symbole_bot  # Le bot joue avec le symbole que n'a pas choisi l'utilisateur
                 return
+            
+def bot_moyen(symbole_bot, grid, symbole_joueur):
+    # Vérifie si le bot peut gagner
+    for i in range(3):
+        for j in range(3):
+            if grid[i][j] == " ":
+                grid[i][j] = symbole_bot
+                if verif_victoire(grid):
+                    return  # Gagner immédiatement
+                grid[i][j] = " "  # Annuler le coup temporaire
 
+    # Vérifie si le bot doit bloquer l'adversaire
+    for i in range(3):
+        for j in range(3):
+            if grid[i][j] == " ":
+                grid[i][j] =symbole_joueur
+                if verif_victoire(grid):
+                    grid[i][j] = symbole_bot  # Bloquer le joueur humain
+                    return
+                grid[i][j] = " "  # Annuler le coup temporaire
+
+    # Prendre le centre si disponible
+    if grid[1][1] == " ":
+        grid[1][1] = symbole_bot
+        return
+
+    # Prendre un coin si disponible
+    for (i, j) in [(0, 0), (0, 2), (2, 0), (2, 2)]:
+        if grid[i][j] == " ":
+            grid[i][j] = symbole_bot
+            return
+
+    # Choisir une case vide (en dernier recours)
+    for i in range(3):
+        for j in range(3):
+            if grid[i][j] == " ":
+                grid[i][j] = symbole_bot
+                return
 
 def demander_rejouer():
     while True:
@@ -132,36 +169,87 @@ def demander_rejouer():
         else:
             print("Réponse invalide, merci de rentrer 'oui' ou 'non'.")
 
-# Fonction principale pour jouer au jeu
+# Fonction principale pour jouer au jeu niveau facile 
 def jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom ):
     tour = 1
+    joueur_actuel = symbole_joueur
+    if joueur != symbole_joueur:  # Si c'est le bot qui commence
+        joueur_actuel = symbole_bot  # Le bot commence immédiateme
 
     while tour <= 9:
         print_grid(grid)
-        if joueur == symbole_joueur :  # Le joueur humain joue
+        if joueur_actuel == symbole_joueur :  # Le joueur humain joue
             print(f"C'est au tour du joueur {joueur}.")
             ligne, colonne = demander_position()
 
             # Vérifie si la case est déjà occupée
             if grid[ligne][colonne] == " ":
-                grid[ligne][colonne] = joueur
+                grid[ligne][colonne] = symbole_joueur
                 if verif_victoire(grid):
                     print_grid(grid)
                     print(f"Félicitations ! Le joueur {joueur} a gagné.")
                     break
                 # Passe au joueur suivant
-                joueur = symbole_bot
+                joueur_actuel = symbole_bot
                 tour += 1
             else:
                 print("Case déjà occupée, essayez encore.")
         else:  # Le bot joue
             print(f"C'est au tour du joueur {joueur} (le bot).")
-            bot_game(symbole_bot, grid)  # Le bot joue
+            bot_facile(symbole_bot, grid)  # Le bot joue
             if verif_victoire(grid):
                 print_grid(grid)
                 print(f"Oh mince! Le joueur {joueur} (le bot) a gagné.")
                 break
-            joueur = symbole_joueur  # Passe au joueur humain
+            joueur_actuel = symbole_joueur  # Passe au joueur humain
+            tour += 1
+
+    if tour > 9:
+        print_grid(grid)
+        print("Match nul !")
+
+        # Demander si le joueur veut rejouer
+    if demander_rejouer():
+        # Réinitialiser la grille pour la nouvelle partie
+        grid = [[" " for _ in range(3)] for _ in range(3)]
+         # Démarrer directement le jeu avec les mêmes paramètres
+        print("\nLe jeu recommence maintenant, Appuyez sur Entrée !")
+        input()  # Attente de l'entrée pour démarrer
+        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
+
+# Fonction principale pour jouer au jeu niveau moyen 
+def jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom ):
+    tour = 1
+    joueur_actuel =  symbole_joueur
+    if joueur != symbole_joueur:  # Si c'est le bot qui commence
+       joueur_actuel = symbole_bot  # Le bot commence immédiatement
+
+    while tour <= 9:
+        print_grid(grid)
+        if joueur_actuel == symbole_joueur :  # Le joueur humain joue
+            print(f"C'est au tour de {joueur_actuel}.")
+            ligne, colonne = demander_position()
+
+            # Vérifie si la case est déjà occupée
+            if grid[ligne][colonne] == " ":
+                grid[ligne][colonne] = symbole_joueur
+                if verif_victoire(grid):
+                    print_grid(grid)
+                    print(f"Félicitations ! Le joueur {joueur_actuel} a gagné.")
+                    break
+                # Passe au joueur suivant
+                joueur_actuel = symbole_bot
+                tour += 1
+            else:
+                print("Case déjà occupée, essayez encore.")
+        else:  # Le bot joue
+            print(f"C'est au tour du joueur {joueur_actuel} (le bot).")
+            bot_moyen(symbole_bot, grid, symbole_joueur)  # Le bot joue
+            if verif_victoire(grid):
+                print_grid(grid)
+                print(f"Oh mince! Le joueur {joueur_actuel} (le bot) a gagné.")
+                break
+            joueur_actuel = symbole_joueur  # Passe au joueur humain
             tour += 1
 
     if tour > 9:
@@ -175,12 +263,7 @@ def jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom ):
          # Démarrer directement le jeu avec les mêmes paramètres
         print("\nLe jeu recommence maintenant, Appuyez sur Entrée !")
         input()  # Attente de l'entrée pour démarrer
-        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
-
-  # Placeholder pour les modes "moyen" et "difficile"
-def jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom):
-    print("\nLe mode moyen est en cours de développement.")
-
+        jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
 
 def jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom):
     print("\nLe mode difficile est en cours de développement.")
