@@ -1,5 +1,3 @@
-#A faire: améliorer les instructions du jeu
-
 # Début du jeu : introduction 
 def ask_name():
     while True:
@@ -14,7 +12,7 @@ def show_rules():
     while True:
         show_rules = input("\nWould you like to see the game rules (yes/no) ? ").lower().strip()
         if show_rules == "yes":
-            print("\nGame rules:\n- The goal is to align three identical symbols (X or O) horizontally, vertically, or diagonally.\n- The game is played on a 3x3 grid.")
+            print("\nGame rules:\n- The goal is to align three identical symbols (X or O) horizontally, vertically, or diagonally.\n- The game is played on a 3x3 grid.\n you will play with a bot named Pixi ! ")
         elif show_rules == "no":
             print("\nOkey, let's continue")
         else:
@@ -33,7 +31,7 @@ def choose_symbol():
             return player_symbol, bot_symbol
         elif player_symbol == "O":
             bot_symbol = "X"
-            print(f"\nGood, you are {player_symbol} and the bot is {bot_symbol}.")
+            print(f"\nGood, you are {player_symbol} and Pixi the bot is {bot_symbol}.")
             return player_symbol, bot_symbol
         else:
             print("\nPlease enter the symbols 'O' or 'X'.")
@@ -91,13 +89,13 @@ def ask_position():
     COLUMN_MAPPING = {"A": 0, "B": 1, "C": 2}  # Columns: A, B, C -> indices 0, 1, 2
 
     while True:
-        row = input("Enter the row number (1-3): ").strip()
+        row = input("\nEnter the row number (1-3): ").strip()
         if not (row.isdigit() and 1 <= int(row) <= 3):
-            print("Invalid input for the row. Please enter a number between 1 and 3. ")
+            print("\nInvalid input for the row. Please enter a number between 1 and 3. ")
             continue
-        column = input("Enter the letter corresponding to the column (A-C): ").strip().upper()
+        column = input("\nEnter the letter corresponding to the column (A-C): ").strip().upper()
         if column not in COLUMN_MAPPING:
-            print("Invalid input for the column. Please enter a letter between A and C.")
+            print("\nInvalid input for the column. Please enter a letter between A and C.")
             continue
 
         return int(row) - 1, COLUMN_MAPPING[column] # Conversion et retour de la position
@@ -161,14 +159,14 @@ def medium_bot(bot_symbol, grid, player_symbol):
 
 def ask_replay():
     while True:
-        replay = input("Do you want to play again? (yes/no): ").lower().strip()
+        replay = input("\nDo you want to play again? (yes/no): ").lower().strip()
         if replay == "yes":
             return True  # Replay
         elif replay == "no":
-            print("Thanks for playing! See you soon.")
+            print("\nThanks for playing! See you soon.")
             return False  # Don't replay
         else:
-            print("Invalid response, please enter 'yes' or 'no'.")
+            print("\nInvalid response, please enter 'yes' or 'no'.")
 
 
 # Fonction principale pour jouer au jeu niveau facile 
@@ -181,7 +179,7 @@ def play_easy(player, player_symbol, bot_symbol, grid, name):
     while turn <= 9:
         print_grid(grid)
         if current_player == player_symbol:  # The human player plays
-            print(f"It's your turn.({current_player})")
+            print(f"\nIt's your turn.({current_player})")
             row, column = ask_position()
 
             # Check if the spot is already taken
@@ -189,26 +187,26 @@ def play_easy(player, player_symbol, bot_symbol, grid, name):
                 grid[row][column] = player_symbol
                 if check_victory(grid):
                     print_grid(grid)
-                    print(f"Congratulations! you won ({current_player}).")
+                    print(f"\nCongratulations! you won ({current_player}).")
                     break
                 # Switch to the next player
                 current_player = bot_symbol
                 turn += 1
             else:
-                print("Spot already taken, try again.")
+                print("\nSpot already taken, try again.")
         else:  # The bot plays
-            print(f"It's Pixi's turn ({current_player}).")
+            print(f"\nIt's Pixi's turn ({current_player}).")
             easy_bot(bot_symbol, grid)  # The bot plays
             if check_victory(grid):
                 print_grid(grid)
-                print(f"Oh no! Pixi the bot won ({current_player}).")
+                print(f"\nOh no! Pixi the bot won ({current_player}).")
                 break
             current_player = player_symbol  # Switch to the human player
             turn += 1
 
     if turn > 9:
         print_grid(grid)
-        print("It's a tie!")
+        print("\nIt's a tie!")
 
     # Ask if the player wants to replay
     if ask_replay():
@@ -229,7 +227,7 @@ def play_medium(player, player_symbol, bot_symbol, grid, name):
     while turn <= 9:
         print_grid(grid)
         if current_player == player_symbol:  # The human player plays
-            print(f"It's your turn ({current_player}).")
+            print(f"\nIt's your turn ({current_player}).")
             row, column = ask_position()
 
             # Check if the spot is already taken
@@ -237,26 +235,26 @@ def play_medium(player, player_symbol, bot_symbol, grid, name):
                 grid[row][column] = player_symbol
                 if check_victory(grid):
                     print_grid(grid)
-                    print(f"Congratulations! You won.")
+                    print(f"\nCongratulations! You won.")
                     break
                 # Switch to the next player
                 current_player = bot_symbol
                 turn += 1
             else:
-                print("Spot already taken, try again.")
+                print("\nSpot already taken, try again.")
         else:  # The bot plays
-            print(f"It's Pixi's turn ({current_player}).")
+            print(f"\nIt's Pixi's turn ({current_player}).")
             medium_bot(bot_symbol, grid, player_symbol)  # The bot plays
             if check_victory(grid):
                 print_grid(grid)
-                print(f"Oh no! Pixi won ({current_player}).")
+                print(f"\nOh no! Pixi won ({current_player}).")
                 break
             current_player = player_symbol  # Switch to the human player
             turn += 1
 
     if turn > 9:
         print_grid(grid)
-        print("It's a tie!")
+        print("\nIt's a tie!")
 
 
     # Ask if the player wants to replay
