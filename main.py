@@ -58,17 +58,7 @@ def choisir_niveau():
             return niveau
         else:
             print("\nMerci de choisir un niveau valide : facile, moyen ou difficile.")
-            # Appeler la fonction appropriée selon le niveau choisi
-        if niveau == "facile":
-            jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)
-        elif niveau == "moyen":
-            print("\nMode moyen non encore implémenté. Revenez bientôt !")
-            # jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)  # À implémenter
-        elif niveau == "difficile":
-            print("\nMode difficile non encore implémenté. Revenez bientôt !")
-            # jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom)  # À implémenter
-
-
+           
 def demarrer_jeu():
     print("\nBienvenue au jeu du Morpion!")
     nom = demander_nom()  # Demander et valider le nom du joueur
@@ -81,7 +71,7 @@ def demarrer_jeu():
     print("\n" + "-" * 30)
     input("\nLe jeu commence maintenant, Appuyez sur Entrée !")
     print("\n" + "-" * 30)
-    return joueur, symbole_joueur, symbole_bot, nom # Retourner ces valeurs pour commencer le jeu
+    return joueur, symbole_joueur, symbole_bot, nom, niveau # Retourner ces valeurs pour commencer le jeu
 
  
 # Création de la grille vide
@@ -187,11 +177,21 @@ def jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom ):
         input()  # Attente de l'entrée pour démarrer
         jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Recommencer le jeu
 
-    # Exécution du jeu
-if __name__ == "__main__":
- 
-# Démarrer le jeu et obtenir les paramètres du jeu
-    joueur, symbole_joueur, symbole_bot, nom = demarrer_jeu()
+  # Placeholder pour les modes "moyen" et "difficile"
+def jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom):
+    print("\nLe mode moyen est en cours de développement.")
 
-# Lancer la partie avec les paramètres obtenus, incluant le nom
-jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)  # Démarrer la partie avec le nom du joueur
+
+def jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom):
+    print("\nLe mode difficile est en cours de développement.")
+
+
+# Lancer le jeu
+if __name__ == "__main__":
+    joueur, symbole_joueur, symbole_bot, nom, niveau = demarrer_jeu()
+    if niveau == "facile":
+        jouer_facile(joueur, symbole_joueur, symbole_bot, grid, nom)
+    elif niveau == "moyen":
+        jouer_moyen(joueur, symbole_joueur, symbole_bot, grid, nom)
+    elif niveau == "difficile":
+        jouer_difficile(joueur, symbole_joueur, symbole_bot, grid, nom)
